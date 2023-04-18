@@ -4,8 +4,8 @@ import createTransition from "./gl-transition";
 
 function drawTranstion(
   container,
-  imageFrom,
-  imageTo,
+  fromArray,
+  toArray,
   width,
   height,
   transitionName
@@ -27,13 +27,7 @@ function drawTranstion(
   );
   gl.viewport(0, 0, width, height);
 
-  const from = createTexture(gl, imageFrom);
-  from.minFilter = gl.LINEAR;
-  from.magFilter = gl.LINEAR;
 
-  const to = createTexture(gl, imageTo);
-  to.minFilter = gl.LINEAR;
-  to.magFilter = gl.LINEAR;
 
   const transition = createTransition(
     gl,
@@ -41,10 +35,22 @@ function drawTranstion(
   );
 
   // transition duration in ms, try set it to 5000
-  const duration = 1000;
+  const duration = 5000;
 
   const loop = (t) => {
     requestAnimationFrame(loop);
+    // 如果这里直接读 videoFrom 和 videoTo，过不了多久就会崩溃
+    const fromData = document.getElementById("canvasFrom");
+    const from = createTexture(gl, fromData);
+    from.minFilter = gl.LINEAR;
+    from.magFilter = gl.LINEAR;
+
+    const toData = document.getElementById("canvasTo");
+    const to = createTexture(gl, toData);
+    to.minFilter = gl.LINEAR;
+    to.magFilter = gl.LINEAR;
+
+
     const progress = (t / duration) % 1;
     transition.draw(progress, from, to, canvas.width, canvas.height, {
       persp: 1.5,

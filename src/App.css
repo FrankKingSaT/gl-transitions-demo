@@ -13,6 +13,13 @@
   height: 200px;
 }
 
+
+#operations video{
+  width: 356px;
+  height: 200px;
+}
+
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
