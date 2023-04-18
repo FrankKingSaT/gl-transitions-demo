@@ -4,11 +4,11 @@ import createTexture from "gl-texture2d";
 import "./App.css";
 
 function App() {
-  function drawTranstion(imageFrom, imageTo, width, height, transitionName) {
+  function drawTranstion(container, imageFrom, imageTo, width, height, transitionName) {
     const canvas = document.createElement("canvas");
-    document.body.appendChild(canvas);
-    canvas.width = 500;
-    canvas.height = 400;
+    container.appendChild(canvas);
+    canvas.width = width;
+    canvas.height = height;
 
     const gl =
       canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
@@ -68,16 +68,18 @@ function App() {
   }
 
   function startShow() {
+    const container = document.getElementById("transitions-container");
     const imgFrom = document.getElementById("imgFrom");
     const imgTo = document.getElementById("imgTo");
     const select = document.getElementById("transtions-select");
     const transitionName = select.value;
-    drawTranstion(imgFrom, imgTo, 500, 400,transitionName);
+    drawTranstion(container, imgFrom, imgTo, 356, 200,transitionName);
   }
 
   return (
     <div className="App">
-      <header className="App-header">
+      <div id='transitions-container'></div>
+      <div id='operations'>
         {/* <input id="imageFrom" type="file" onChange={onSelectImageFrom} />
         <input id="imageTo" type="file" onChange={onSelectImageTo} /> */}
         <select id="transtions-select">
@@ -85,12 +87,12 @@ function App() {
             return <option value={t.name}>{t.name}</option>;
           })}
         </select>
-        <button onClick={startShow}>开始转换</button>
+        <button onClick={startShow}>add transition</button>
         <div>
           <img id="imgFrom" src='/imageFrom.jpg' />
           <img id="imgTo" src='/imageTo.jpg' />
         </div>
-      </header>
+      </div>
     </div>
   );
 }
