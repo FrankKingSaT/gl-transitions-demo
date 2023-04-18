@@ -40,9 +40,13 @@ function drawTranstion(
     transitions.find((t) => t.name === transitionName)
   );
 
+  // transition duration in ms, try set it to 5000
+  const duration = 1000;
+
   const loop = (t) => {
     requestAnimationFrame(loop);
-    transition.draw((t / 1000) % 1, from, to, canvas.width, canvas.height, {
+    const progress = (t / duration) % 1;
+    transition.draw(progress, from, to, canvas.width, canvas.height, {
       persp: 1.5,
       unzoom: 0.6,
     });

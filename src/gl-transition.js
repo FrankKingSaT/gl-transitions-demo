@@ -1,5 +1,6 @@
 import createShader from "gl-shader";
 
+// 一个顶点着色器，用于渲染一个大三角形
 const VERT = `attribute vec2 _p;
 varying vec2 _uv;
 void main() {
@@ -7,13 +8,14 @@ gl_Position = vec4(_p,0.0,1.0);
 _uv = vec2(0.5, 0.5) * (_p+vec2(1.0, 1.0));
 }`;
 
+//计算图像纹理坐标变换的方式
 const resizeModes = {
   cover: (r) => `.5+(uv-.5)*vec2(min(ratio/${r},1.),min(${r}/ratio,1.))`,
   contain: (r) => `.5+(uv-.5)*vec2(max(ratio/${r},1.),max(${r}/ratio,1.))`,
   stretch: () => "uv",
 };
 
-// 基于传入的 transitionGlsl，构造 frag
+// 通过传入的 transitionGlsl，构造 frag，片元着色器
 const makeFrag = (transitionGlsl, resizeMode) => {
   const rFunc = resizeModes[resizeMode];
   if (!rFunc) throw new Error(`Invalid resizeMode=${resizeMode}`);
