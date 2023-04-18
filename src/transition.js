@@ -1,6 +1,6 @@
 import transitions from "gl-transitions";
-import createTransition from "./gl-transition";
 import createTexture from "gl-texture2d";
+import createTransition from "./gl-transition";
 
 function drawTranstion(
   container,
